@@ -1,22 +1,26 @@
-# Documentation officielle — cubFirst
+# 📘 Documentation complète — cubFirst
 
-Bienvenue dans la documentation complète du framework **cubFirst**, un micro-framework HTML-first léger, modulaire, sans dépendance.
+**cubFirst** est un framework JavaScript ultra léger basé sur une approche **HTML-first**.  
+Il permet d'ajouter des comportements dynamiques à vos sites simplement à l’aide d’attributs HTML `data-plugin`, sans aucune dépendance.
 
----
-
-## 🧠 Philosophie
-
-cubFirst repose sur 3 piliers :
-
-- **HTML-first** : tout passe par le HTML (aucun JS à écrire)
-- **data-plugin** : chaque élément HTML peut déclarer un comportement interactif
-- **modularité** : chaque plugin est autonome, activé uniquement si nécessaire
+> 🔗 Démo officielle : [https://romtouf.github.io/cubFirst-demo](https://romtouf.github.io/cubFirst-demo)
 
 ---
 
-## 🚀 Installation
+## 🚀 Introduction
 
-### Via CDN (recommandé)
+cubFirst est conçu pour être :
+
+- **Minimaliste** : pas de surcharge, tout tient dans un seul fichier JavaScript.
+- **HTML-first** : pas besoin d’écrire de JavaScript, tout se passe dans le HTML.
+- **CDN-friendly** : fonctionne immédiatement via `<script>` dans le `<head>`.
+- **Modulaire** : chaque plugin fonctionne indépendamment.
+
+---
+
+## ⚙️ Installation
+
+Ajoutez simplement ce script à votre page HTML :
 
 ```html
 <script
@@ -25,186 +29,206 @@ cubFirst repose sur 3 piliers :
 ></script>
 ```
 
-### Via npm (optionnel)
+---
 
-```bash
-npm install cubfirst
-```
-
-Puis dans ton JS :
-
-```js
-import "cubfirst/dist/cubfirst.min.js";
-```
+## 📌 Utilisation
 
 ---
 
-## ⚙️ Fonctionnement
+## 🔧 Comprendre `data-options`
 
-CubFirst détecte automatiquement les éléments contenant :
+Chaque plugin cubFirst peut recevoir des paramètres personnalisés à travers l'attribut `data-options`.  
+Cet attribut doit contenir une chaîne JSON avec les options spécifiques au plugin utilisé.
+
+### 📌 Syntaxe générale
 
 ```html
-<div data-plugin="NOM" data-options='{"clé": "valeur"}'></div>
+<div data-plugin="NOM_DU_PLUGIN" data-options='{"clé": "valeur"}'></div>
 ```
 
-Chaque plugin reçoit l'élément ciblé (`el`) et les options (`opts`) automatiquement.
+- **Format** : toujours une chaîne JSON (entourée de `'`)
+- **Clé/valeur** : dépend du plugin concerné
+- **Types autorisés** : chaînes (`"texte"`), booléens (`true/false`), nombres (`3000`), sélecteurs (`"#id"`)
 
----
+### 🎯 Exemples concrets
 
-## 🔌 Plugins intégrés
-
-### ✅ `modal`
+#### Modal
 
 ```html
-<button id="openModal">Ouvrir</button>
+<div data-plugin="modal" data-options='{"trigger": "#ouvrirModal"}'></div>
+```
+
+> Le plugin attend un sélecteur CSS pour déclencher l'ouverture.
+
+#### Tooltip
+
+```html
+<span data-plugin="tooltip" data-options='{"text": "Bonjour"}'>Info</span>
+```
+
+> Le texte sera injecté dans l'attribut `title`.
+
+#### Carousel
+
+```html
+<div data-plugin="carousel" data-options='{"interval": 5000}'>...</div>
+```
+
+> `interval` en millisecondes pour faire défiler automatiquement.
+
+#### Rating
+
+```html
 <div
-  data-plugin="modal"
-  data-options='{"trigger": "#openModal"}'
-  class="cubfirst-modal hidden"
->
-  <div class="modal-content">Contenu ici</div>
-</div>
+  data-plugin="rating"
+  data-options='{"value": 3.5, "max": 5, "readonly": true}'
+></div>
 ```
 
-Options :
-
-- `trigger`: sélecteur CSS de l’élément qui déclenche la modale
-
-### ✅ `tabs`
+#### Input Mask
 
 ```html
-<div data-plugin="tabs">
-  <div data-tab="a">Onglet A</div>
-  <div data-tab="b">Onglet B</div>
-  <div class="tab-content" data-tab="a">Contenu A</div>
-  <div class="tab-content" data-tab="b">Contenu B</div>
-</div>
-```
-
-### ✅ `accordion`
-
-Structure :
-
-```html
-<div data-plugin="accordion">
-  <div class="accordion-item">
-    <div class="accordion-header">Titre</div>
-    <div class="accordion-content">Contenu</div>
-  </div>
-</div>
-```
-
-### ✅ `tooltip`
-
-```html
-<span data-plugin="tooltip" data-options='{"text": "info-bulle"}'>Info</span>
-```
-
-### ✅ `copy`
-
-```html
-<button data-plugin="copy" data-options='{"target": "#texte"}'>Copier</button>
-<p id="texte">À copier</p>
-```
-
-### ✅ `toggle`
-
-```html
-<button data-plugin="toggle" data-options='{"target": "#bloc"}'>
-  Afficher/Masquer
-</button>
-<div id="bloc" hidden>Contenu</div>
-```
-
-### ✅ `scrollto`
-
-```html
-<button data-plugin="scrollto" data-options='{"target": "#footer"}'>
-  Aller en bas
-</button>
-```
-
-### ✅ `countdown`
-
-```html
-<div data-plugin="countdown" data-options='{"to": "2025-12-31T23:59:59"}'></div>
-```
-
-### ✅ `darkmode-toggle`
-
-```html
-<button data-plugin="darkmode-toggle">Mode sombre</button>
-```
-
-### ✅ `confirm`
-
-```html
-<a
-  href="/delete"
-  data-plugin="confirm"
-  data-options='{"message": "Supprimer ?"}'
-  >Supprimer</a
->
+<input data-plugin="input-mask" data-options='{"type": "phone"}' />
 ```
 
 ---
 
-## 🎨 Personnalisation avec Tailwind
+### ✅ Astuces
 
-CubFirst applique uniquement des classes neutres (`cubfirst-modal`, `modal-content`, etc.). Tu peux donc :
+- Toujours valider le JSON avec un outil (ex : [jsonlint.com](https://jsonlint.com/)) si tu as une erreur.
+- Pour passer plusieurs options, sépare-les par des virgules dans la chaîne JSON.
+- Si tu veux passer un booléen, n’utilise pas `"true"` (chaîne), mais bien `true` (valeur logique).
 
-- ajouter tes propres classes Tailwind
-- overrider via CSS si besoin
+---
 
-Exemple :
+Chaque plugin est activé grâce à un attribut :
 
 ```html
-<div class="cubfirst-modal flex justify-center items-center bg-black/50"></div>
+<div data-plugin="nom-du-plugin" data-options='{"clé": "valeur"}'></div>
+```
+
+L’attribut `data-options` permet de passer des paramètres spécifiques au plugin.
+
+---
+
+## 🧩 Liste complète des plugins
+
+| Plugin            | Description                                    |
+| ----------------- | ---------------------------------------------- |
+| `modal`           | Ouvre/ferme une modale                         |
+| `tabs`            | Affiche des contenus en onglets                |
+| `accordion`       | Affiche/replie des sections d’éléments         |
+| `tooltip`         | Affiche une info-bulle au survol               |
+| `toast`           | Affiche une alerte temporaire                  |
+| `contact-form`    | Envoie un formulaire AJAX                      |
+| `copy`            | Copie du texte dans le presse-papiers          |
+| `toggle`          | Affiche ou masque un bloc                      |
+| `scrollto`        | Scroll en douceur vers une ancre               |
+| `countdown`       | Affiche un compte à rebours                    |
+| `darkmode-toggle` | Bascule le mode sombre                         |
+| `confirm`         | Confirme une action avec une boîte de dialogue |
+| `dropdown`        | Affiche un menu déroulant                      |
+| `carousel`        | Carrousel d’images/éléments                    |
+| `reveal`          | Animation à l’apparition dans le viewport      |
+| `input-mask`      | Formatage de champ (ex. téléphone, date)       |
+| `progress-scroll` | Barre de progression en haut de page           |
+| `card`            | Génère une carte dynamique                     |
+| `filter`          | Filtre des éléments selon leur tag             |
+| `grid-expand`     | Zoom sur un élément au clic                    |
+| `hover-preview`   | Affiche une prévisualisation au survol         |
+| `rating`          | Système d’étoiles d’évaluation                 |
+| `load-more`       | Affiche plus d’éléments à la demande           |
+| `hamburger`       | Affiche/masque un menu mobile                  |
+
+---
+
+## 🔍 Exemple détaillé
+
+### Exemple : `modal`
+
+```html
+<button id="open">Ouvrir</button>
+<div data-plugin="modal" data-options='{"trigger": "#open"}' class="hidden">
+  <div class="modal-content">Contenu de la modale</div>
+</div>
 ```
 
 ---
 
-## 🔧 Créer ton propre plugin
+### Exemple : `carousel`
+
+```html
+<div data-plugin="carousel" data-options='{"interval": 3000}'>
+  <div class="carousel-slide">Slide 1</div>
+  <div class="carousel-slide">Slide 2</div>
+  <button data-carousel="prev">‹</button>
+  <button data-carousel="next">›</button>
+</div>
+```
+
+---
+
+## 🎨 Personnalisation
+
+Tous les plugins sont **stylisables avec Tailwind CSS** ou avec vos propres classes.  
+cubFirst n’impose aucun style sauf quelques `hidden`, `position`, `z-index` ou `display`.
+
+---
+
+## 🔧 Développement personnalisé
+
+Tu peux développer tes propres plugins :
 
 ```ts
-function initMyPlugin(el: HTMLElement, options: any) {
-  // logique personnalisée
+function initMonPlugin(el: HTMLElement, options: any) {
+  // ta logique ici
 }
 ```
 
-Ajoute-le dans le switch :
+Et l'ajouter au bootstrap :
 
 ```ts
-case 'my-plugin': initMyPlugin(el, opts); break;
+case 'mon-plugin': initMonPlugin(el, opts); break;
 ```
 
 ---
 
-## 🧪 Exemples avancés
+## 🔒 Accessibilité
 
-Voir le fichier `index.html` complet de démo ou le site officiel prochainement.
-
----
-
-## ❓ FAQ
-
-- **Et si mon plugin a besoin d’un fichier externe ?**
-
-  > Utilise `import()` dynamique ou intègre directement dans `cubfirst.ts`
-
-- **Peut-on utiliser cubFirst avec Alpine.js ou HTMX ?**
-  > Oui, cubFirst ne rentre pas en conflit, car il ne modifie pas le DOM en continu
+cubFirst encourage une structure accessible, mais certains plugins (modal, tabs) peuvent être étendus avec des rôles ARIA pour une accessibilité renforcée.
 
 ---
 
-## 🗺️ Roadmap
+## 📦 CDN
 
-- Système de chargement lazy des plugins (optionnel)
-- Page de démo officielle hébergée
-- Intégration Astro / Eleventy docs site
+Tous les fichiers minifiés sont disponibles via jsDelivr :
+
+```html
+<script
+  src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v1.0.0/dist/cubfirst.min.js"
+  defer
+></script>
+```
 
 ---
 
-## 📜 Licence
+## 🧠 À retenir
 
-MIT © [Romtouf](https://github.com/Romtouf)
+- Aucun framework requis (pas de React/Vue)
+- Intégrable dans n’importe quel projet web statique
+- Compatible avec tout système de templating
+
+---
+
+## 📄 Licence
+
+Projet open-source sous licence **MIT**.
+
+Développé par [Romtouf](https://github.com/Romtouf) — contributions bienvenues.
+
+---
+
+## 🔗 Démo
+
+📺 Voir le framework en action :  
+[https://romtouf.github.io/cubFirst-demo](https://romtouf.github.io/cubFirst-demo)
