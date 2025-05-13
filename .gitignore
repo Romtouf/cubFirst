@@ -1,0 +1,21 @@
+# Node.js
+node_modules/
+*.log
+
+# Builds intermédiaires (mais on garde dist/)
+*.tsbuildinfo
+
+# IDE (Visual Studio Code, WebStorm…)
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Config ou fichiers sensibles
+.env
+.env.local
+
+# (facultatif) Si tu veux exclure la doc locale du package npm
+# mais la garder dans GitHub → ne pas mettre docs/ ici

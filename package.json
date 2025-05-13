@@ -1,0 +1,28 @@
+{
+  "name": "cubfirst",
+  "version": "1.0.0",
+  "description": "Framework HTML-first modulaire et activable par data-plugin, sans JS requis pour l'utilisateur.",
+  "main": "dist/cubfirst.min.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Romtouf/cubfirst.git"
+  },
+  "keywords": [
+    "html-first",
+    "framework",
+    "javascript",
+    "data-plugin",
+    "modular",
+    "tailwind",
+    "frontend",
+    "micro-framework"
+  ],
+  "author": "Romtouf",
+  "license": "MIT",
+  "scripts": {
+    "build": "esbuild cubfirst.ts --bundle --minify --target=es6 --outfile=dist/cubfirst.min.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.0"
+  }
+}
