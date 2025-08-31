@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Creative - Portfolio Interactif</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header avec Dark Mode */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .dark-toggle {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark-toggle:hover {
+            background: #2d3748;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section avec Carousel */
+        .hero {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .hero-carousel {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-slide:nth-child(1) { background: linear-gradient(45deg, #ff6b6b, #ee5a24); }
+        .carousel-slide:nth-child(2) { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
+        .carousel-slide:nth-child(3) { background: linear-gradient(45deg, #a8edea, #fed6e3); color: #2d3748; }
+        .carousel-slide:nth-child(4) { background: linear-gradient(45deg, #ffecd2, #fcb69f); color: #2d3748; }
+
+        /* Dashboard Section avec Tabs */
+        .dashboard {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-title {
+            padding: 0.75rem 1.5rem;
+            background: #f7fafc;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab-title.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab-content {
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 15px;
+            min-height: 200px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Interactive Section */
+        .interactive {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #48bb78, #38a169);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #f56565, #e53e3e);
+        }
+
+        /* Accordion */
+        .accordion-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .accordion-header {
+            background: #f7fafc;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .accordion-header:hover {
+            background: #edf2f7;
+        }
+
+        .accordion-content {
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Rating */
+        .rating-section {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .rating-demo {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        /* Toast Container */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: #e2e8f0;
+        }
+
+        .dark-mode .header,
+        .dark-mode .hero,
+        .dark-mode .dashboard,
+        .dark-mode .card {
+            background: rgba(45, 55, 72, 0.95);
+            color: #e2e8f0;
+        }
+
+        .dark-mode .tab-content {
+            background: #2d3748;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .stat-card,
+        .dark-mode .accordion-item {
+            background: #4a5568;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .accordion-header {
+            background: #2d3748;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Custom Toast Styles */
+        .cubfirst-toast {
+            background: white;
+            color: #2d3748;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .toast-success {
+            border-left-color: #48bb78;
+        }
+
+        .toast-error {
+            border-left-color: #f56565;
+        }
+
+        .toast-warning {
+            border-left-color: #ed8936;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header avec Dark Mode Toggle -->
+    <div class="container">
+        <header class="header fade-in">
+            <div class="logo">Alex Creative</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="dark-toggle" data-plugin="darkmode-toggle">🌙 Mode Sombre</button>
+        </header>
+
+        <!-- Hero Section avec Carousel -->
+        <section class="hero fade-in">
+            <h1>Portfolio Créatif Interactif</h1>
+            <p>Découvrez mes créations à travers une expérience immersive</p>
+            
+            <div class="hero-carousel" data-plugin="carousel" data-options='{"interval": 4000}'>
+                <div class="carousel-slide">🎨 Design Graphique</div>
+                <div class="carousel-slide">💻 Développement Web</div>
+                <div class="carousel-slide">📱 Applications Mobile</div>
+                <div class="carousel-slide">🚀 Projets Innovants</div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <button class="btn" onclick="showWelcomeToast()">👋 Dire Bonjour</button>
+                <button class="btn btn-secondary" data-plugin="scrollto" data-options='{"target": "#dashboard", "offset": 100}'>📊 Voir Dashboard</button>
+            </div>
+        </section>
+
+        <!-- Dashboard avec Tabs -->
+        <section id="dashboard" class="dashboard fade-in">
+            <h2>📊 Dashboard Interactif</h2>
+            
+            <div data-plugin="tabs">
+                <div class="tab-nav">
+                    <div data-tab="stats" class="tab-title">📈 Statistiques</div>
+                    <div data-tab="projects" class="tab-title">🎯 Projets</div>
+                    <div data-tab="skills" class="tab-title">💪 Compétences</div>
+                    <div data-tab="contact" class="tab-title">📞 Contact</div>
+                </div>
+
+                <div class="tab-content" data-tab="stats">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" data-plugin="countdown" data-options='{"to": "2024-12-31T23:59:59"}'>365</div>
+                            <div class="stat-label">Jours restants en 2024</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">42</div>
+                            <div class="stat-label">Projets Terminés</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Satisfaction Client</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">5★</div>
+                            <div class="stat-label">Note Moyenne</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 85%"></div>
+                    </div>
+                    <p style="text-align: center; margin-top: 1rem;">Objectifs 2024 : 85% atteints</p>
+                </div>
+
+                <div class="tab-content" data-tab="projects">
+                    <h3>🎯 Mes Derniers Projets</h3>
+                    <div data-plugin="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">🌐 Site E-commerce Moderne</div>
+                            <div class="accordion-content">
+                                <p>Développement d'une plateforme e-commerce complète avec React et Node.js. Interface utilisateur moderne, paiements sécurisés et gestion avancée des stocks.</p>
+                                <button class="btn btn-success" onclick="copyProjectLink('ecommerce')">📋 Copier le lien</button>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">📱 Application Mobile Fitness</div>
+                            <div class="accordion-content">
+                                <p>Application React Native pour le suivi d'activités sportives avec géolocalisation, statistiques avancées et communauté d'utilisateurs.</p>
+                                <button class="btn btn-success" onclick="copyProjectLink('fitness')">📋 Copier le lien</button>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">🎨 Identité Visuelle Startup</div>
+                            <div class="accordion-content">
+                                <p>Création complète de l'identité visuelle d'une startup tech : logo, charte graphique, site web et supports marketing.</p>
+                                <button class="btn btn-success" onclick="copyProjectLink('branding')">📋 Copier le lien</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" data-tab="skills">
+                    <h3>💪 Mes Compétences</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                        <div>
+                            <h4>Frontend</h4>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 95%"></div>
+                            </div>
+                            <p>React, Vue.js, TypeScript</p>
+                        </div>
+                        <div>
+                            <h4>Backend</h4>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 88%"></div>
+                            </div>
+                            <p>Node.js, Python, PostgreSQL</p>
+                        </div>
+                        <div>
+                            <h4>Design</h4>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 92%"></div>
+                            </div>
+                            <p>Figma, Adobe Suite, UI/UX</p>
+                        </div>
+                        <div>
+                            <h4>Mobile</h4>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 78%"></div>
+                            </div>
+                            <p>React Native, Flutter</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" data-tab="contact">
+                    <h3>📞 Contactez-moi</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                        <div>
+                            <h4>📧 Email</h4>
+                            <p>alex@creative.com</p>
+                            <button class="btn" data-plugin="copy" data-options='{"target": "#email-text"}'>Copier</button>
+                            <span id="email-text" style="display: none;">alex@creative.com</span>
+                        </div>
+                        <div>
+                            <h4>📱 Téléphone</h4>
+                            <p>+33 6 12 34 56 78</p>
+                            <button class="btn" data-plugin="copy" data-options='{"target": "#phone-text"}'>Copier</button>
+                            <span id="phone-text" style="display: none;">+33 6 12 34 56 78</span>
+                        </div>
+                        <div>
+                            <h4>🌐 LinkedIn</h4>
+                            <p>linkedin.com/in/alex</p>
+                            <button class="btn" data-plugin="copy" data-options='{"target": "#linkedin-text"}'>Copier</button>
+                            <span id="linkedin-text" style="display: none;">https://linkedin.com/in/alex</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Interactive -->
+        <div class="interactive">
+            <div class="card fade-in">
+                <h3>🎭 Interactions Avancées</h3>
+                <p>Testez les différentes fonctionnalités interactives :</p>
+                
+                <button class="btn" onclick="showModal()">🪟 Ouvrir Modal</button>
+                <button class="btn btn-secondary" onclick="showRandomToast()">🍞 Toast Aléatoire</button>
+                <button class="btn btn-success" onclick="toggleHiddenContent()">👁️ Toggle Secret</button>
+                
+                <div id="hidden-content" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0fff4; border-radius: 8px;">
+                    <p>🎉 Contenu secret révélé ! Vous avez découvert cette section cachée.</p>
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                <h3>⭐ Évaluation</h3>
+                <p>Que pensez-vous de ce portfolio ?</p>
+                
+                <div class="rating-section">
+                    <div data-plugin="rating" data-options='{"value": 4, "max": 5, "readonly": false}'></div>
+                    <p style="margin-top: 1rem;">Cliquez sur les étoiles pour noter !</p>
+                </div>
+
+                <button class="btn" onclick="showRatingToast()">📊 Voir ma note</button>
+            </div>
+
+            <div class="card fade-in">
+                <h3>🎮 Actions Rapides</h3>
+                <p>Quelques actions utiles :</p>
+                
+                <button class="btn" data-plugin="confirm" data-options='{"message": "Voulez-vous vraiment redémarrer la démo ?"}' onclick="restartDemo()">🔄 Redémarrer</button>
+                <button class="btn btn-danger" onclick="showErrorToast()">⚠️ Test Erreur</button>
+                <button class="btn btn-success" data-plugin="scrollto" data-options='{"target": "body", "behavior": "smooth"}'>⬆️ Haut de page</button>
+            </div>
+        </div>
+
+        <!-- Modal caché -->
+        <div id="demo-modal" data-plugin="modal" data-options='{"trigger": "#modal-trigger"}' style="display: none;">
+            <div class="modal-content" style="background: white; padding: 2rem; border-radius: 15px; max-width: 500px; margin: 10% auto;">
+                <h3 style="margin-bottom: 1rem;">🎉 Modal Interactive</h3>
+                <p>Ceci est une modal créée avec cubFirst ! Elle peut contenir n'importe quel contenu HTML.</p>
+                <div style="margin: 2rem 0;">
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <p style="text-align: center; margin-top: 0.5rem;">Chargement terminé !</p>
+                </div>
+                <button class="btn" onclick="closeModal()">✅ Parfait !</button>
+            </div>
+        </div>
+
+        <!-- Toggle target caché -->
+        <button id="toggle-trigger" data-plugin="toggle" data-options='{"target": "#hidden-content"}' style="display: none;"></button>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Progress Scroll -->
+    <div data-plugin="progress-scroll" style="position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(45deg, #667eea, #764ba2); z-index: 1000;"></div>
+
+    <!-- cubFirst Framework -->
+    <script src="dist/cubfirst.min.js"></script>
+
+    <script>
+        // Variables globales
+        let toastCounter = 0;
+        const toastMessages = [
+            { message: "🎉 Bienvenue sur mon portfolio !", type: "success" },
+            { message: "💡 Astuce : Essayez le mode sombre !", type: "info" },
+            { message: "🚀 Projet en cours de développement", type: "warning" },
+            { message: "✨ Merci de votre visite !", type: "success" },
+            { message: "🎯 N'hésitez pas à me contacter !", type: "info" }
+        ];
+
+        // Fonctions utilitaires
+        function showWelcomeToast() {
+            cubFirst.toast("👋 Salut ! Bienvenue sur mon portfolio interactif créé avec cubFirst !", "success", 4000);
+        }
+
+        function showRandomToast() {
+            const randomToast = toastMessages[Math.floor(Math.random() * toastMessages.length)];
+            cubFirst.toast(randomToast.message, randomToast.type, 3000);
+        }
+
+        function showErrorToast() {
+            cubFirst.toast("❌ Ceci est un exemple d'erreur (pas de panique !)", "error", 3000);
+        }
+
+        function showModal() {
+            const modal = cubFirst.getAPI('#demo-modal', 'modal');
+            if (modal) {
+                modal.open();
+            }
+        }
+
+        function closeModal() {
+            const modal = cubFirst.getAPI('#demo-modal', 'modal');
+            if (modal) {
+                modal.close();
+            }
+        }
+
+        function toggleHiddenContent() {
+            const toggle = cubFirst.getAPI('#toggle-trigger', 'toggle');
+            if (toggle) {
+                toggle.toggle();
+            }
+        }
+
+        function showRatingToast() {
+            const rating = document.querySelector('[data-plugin="rating"]');
+            if (rating && rating.ratingAPI) {
+                const value = rating.ratingAPI.getValue();
+                cubFirst.toast(`⭐ Merci pour votre note de ${value}/5 étoiles !`, "success", 3000);
+            }
+        }
+
+        function copyProjectLink(project) {
+            const links = {
+                ecommerce: "https://github.com/alex/ecommerce-project",
+                fitness: "https://github.com/alex/fitness-app",
+                branding: "https://behance.net/alex/startup-branding"
+            };
+            
+            navigator.clipboard.writeText(links[project]).then(() => {
+                cubFirst.toast(`📋 Lien du projet ${project} copié !`, "success", 2000);
+            });
+        }
+
+        function restartDemo() {
+            // Animation de redémarrage
+            document.body.style.opacity = '0.5';
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
+
+        // Initialisation et événements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animation d'entrée progressive
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Écouter les événements des composants
+            document.addEventListener('modalOpen', () => {
+                console.log('Modal ouverte');
+            });
+
+            document.addEventListener('tabChange', (e) => {
+                console.log('Tab changé:', e.detail.activeTab);
+            });
+
+            document.addEventListener('ratingChanged', (e) => {
+                console.log('Note changée:', e.detail.rating);
+            });
+
+            document.addEventListener('darkModeToggle', (e) => {
+                const btn = document.querySelector('.dark-toggle');
+                btn.textContent = e.detail.isDark ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+            });
+
+            // Toast de bienvenue après 2 secondes
+            setTimeout(() => {
+                showWelcomeToast();
+            }, 2000);
+        });
+
+        // Gestion du scroll pour les animations
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const rate = scrolled * -0.5;
+            document.body.style.backgroundPosition = `center ${rate}px`;
+        });
+    </script>
+</body>
+</html>

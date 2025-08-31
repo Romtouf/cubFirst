@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cubFirst - Guide de Customisation</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; 
+            margin: 0; 
+            padding: 2rem; 
+            background: #f8fafc;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        h1, h2, h3 { color: #2d3748; }
+        h1 { text-align: center; margin-bottom: 3rem; }
+        
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .demo-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            background: #4a5568;
+            color: white;
+            padding: 1rem;
+            font-weight: bold;
+        }
+        
+        .demo-content {
+            padding: 1.5rem;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        /* ===== CUSTOMISATIONS CSS ===== */
+        
+        /* Modal personnalisée - Style Material */
+        .modal-material .cubfirst-modal {
+            backdrop-filter: blur(4px);
+        }
+        
+        .modal-material .cubfirst-modal-content {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14);
+            border: none;
+            max-width: 500px;
+        }
+        
+        .modal-material .cubfirst-modal-close {
+            background: #f5f5f5;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 16px;
+            right: 16px;
+        }
+        
+        /* Tabs personnalisés - Style macOS */
+        .tabs-macos .tab-title {
+            background: #f0f0f0;
+            border: 1px solid #d0d0d0;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            margin-right: 4px;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tabs-macos .tab-title.active {
+            background: white;
+            border-color: #007aff;
+            color: #007aff;
+            transform: translateY(-2px);
+        }
+        
+        .tabs-macos .tab-content {
+            border: 1px solid #d0d0d0;
+            border-radius: 0 8px 8px 8px;
+            padding: 1.5rem;
+            background: white;
+        }
+        
+        /* Carousel personnalisé - Style Netflix */
+        .carousel-netflix {
+            background: #141414;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .carousel-netflix .carousel-slide {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .carousel-netflix .carousel-slide::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+        
+        .carousel-netflix .cubfirst-carousel-bullets {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        .carousel-netflix .cubfirst-carousel-bullets button {
+            width: 8px !important;
+            height: 8px !important;
+            background-color: rgba(255,255,255,0.5) !important;
+            border: 1px solid rgba(255,255,255,0.8) !important;
+        }
+        
+        .carousel-netflix .cubfirst-carousel-bullets button:hover {
+            background-color: white !important;
+        }
+        
+        /* Rating personnalisé - Style iOS */
+        .rating-ios {
+            filter: drop-shadow(0 2px 4px rgba(255,193,7,0.3));
+        }
+        
+        .rating-ios span {
+            font-size: 2rem !important;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transition: all 0.2s ease !important;
+        }
+        
+        .rating-ios span:hover {
+            transform: scale(1.2);
+        }
+        
+        /* Toast personnalisé - Style Slack */
+        .toast-slack.cubfirst-toast {
+            border-radius: 8px;
+            border-left: 4px solid;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-weight: 500;
+        }
+        
+        .toast-slack.success {
+            border-left-color: #2eb67d;
+            background: linear-gradient(135deg, #2eb67d, #1a9b5c);
+        }
+        
+        .toast-slack.error {
+            border-left-color: #e01e5a;
+            background: linear-gradient(135deg, #e01e5a, #c91448);
+        }
+        
+        /* Accordion personnalisé - Style GitHub */
+        .accordion-github .accordion-header {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            font-weight: 600;
+            position: relative;
+            padding-left: 2.5rem;
+        }
+        
+        .accordion-github .accordion-header::before {
+            content: '▶';
+            position: absolute;
+            left: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-github .accordion-header.open::before {
+            transform: rotate(90deg);
+        }
+        
+        .accordion-github .accordion-content {
+            border: 1px solid #d0d7de;
+            border-top: none;
+            background: white;
+        }
+        
+        /* Dropdown personnalisé - Style Notion */
+        .dropdown-notion .cubfirst-dropdown-menu {
+            border: none;
+            box-shadow: 0 16px 70px rgba(0,0,0,0.12);
+            border-radius: 12px;
+            padding: 8px;
+            background: white;
+        }
+        
+        .dropdown-notion .dropdown-item {
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 2px 0;
+            transition: all 0.15s ease;
+        }
+        
+        .dropdown-notion .dropdown-item:hover {
+            background: #f1f3f4;
+        }
+        
+        /* Boutons personnalisés */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+        
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
+        
+        .btn-success { background: #10b981; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-secondary { background: #6b7280; color: white; }
+        
+        /* Styles pour les exemples */
+        .example-box {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background: #f7fafc;
+        }
+        
+        .highlight {
+            background: #fef3c7;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Guide de Customisation cubFirst</h1>
+        
+        <div class="section">
+            <h2>📋 État actuel de la customisation</h2>
+            <p><strong>Bonne nouvelle :</strong> Tous les composants cubFirst sont <span class="highlight">100% customisables</span> !</p>
+            
+            <h3>✅ Ce qui fonctionne parfaitement :</h3>
+            <ul>
+                <li><strong>CSS complet</strong> : Tous les styles peuvent être surchargés</li>
+                <li><strong>Structure HTML</strong> : Tu peux modifier la structure avant initialisation</li>
+                <li><strong>Classes CSS</strong> : Namespace <code>.cubfirst-*</code> évite les conflits</li>
+                <li><strong>Carousel</strong> : API complète pour modifications dynamiques</li>
+            </ul>
+            
+            <h3>⚠️ Limitations actuelles :</h3>
+            <ul>
+                <li><strong>API publique</strong> : Seul le carousel a une API complète</li>
+                <li><strong>Modification post-init</strong> : Autres composants pas encore extensibles</li>
+                <li><strong>Événements</strong> : Peu d'événements personnalisés émis</li>
+            </ul>
+        </div>
+
+        <div class="demo-grid">
+            
+            <!-- Modal Customisée -->
+            <div class="demo-item">
+                <div class="demo-header">🪟 Modal - Style Material Design</div>
+                <div class="demo-content">
+                    <button id="modal-material-trigger" class="btn btn-primary">Ouvrir Modal Material</button>
+                    
+                    <div class="modal-material" data-plugin="modal" data-options='{"trigger": "#modal-material-trigger"}' style="display: none;">
+                        <div class="modal-content">
+                            <h3>Modal Material Design</h3>
+                            <p>Style personnalisé avec backdrop blur et ombres Material.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">/* CSS Personnalisé */
+.modal-material .cubfirst-modal {
+    backdrop-filter: blur(4px);
+}
+.modal-material .cubfirst-modal-content {
+    border-radius: 16px;
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14);
+}</div>
+                </div>
+            </div>
+
+            <!-- Tabs Customisés -->
+            <div class="demo-item">
+                <div class="demo-header">📑 Tabs - Style macOS</div>
+                <div class="demo-content">
+                    <div class="tabs-macos" data-plugin="tabs">
+                        <div style="display: flex;">
+                            <div data-tab="tab1" class="tab-title">Général</div>
+                            <div data-tab="tab2" class="tab-title">Avancé</div>
+                            <div data-tab="tab3" class="tab-title">Sécurité</div>
+                        </div>
+                        <div class="tab-content" data-tab="tab1">
+                            <p>Paramètres généraux de l'application.</p>
+                        </div>
+                        <div class="tab-content" data-tab="tab2">
+                            <p>Options avancées pour les utilisateurs experts.</p>
+                        </div>
+                        <div class="tab-content" data-tab="tab3">
+                            <p>Configuration de la sécurité et des permissions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Netflix -->
+            <div class="demo-item">
+                <div class="demo-header">🎠 Carousel - Style Netflix</div>
+                <div class="demo-content">
+                    <div class="carousel-netflix" data-plugin="carousel" data-options='{"interval": 5000}' style="height: 200px;">
+                        <div class="carousel-slide" style="background: linear-gradient(45deg, #e74c3c, #c0392b); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                            Film 1
+                        </div>
+                        <div class="carousel-slide" style="background: linear-gradient(45deg, #3498db, #2980b9); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                            Film 2
+                        </div>
+                        <div class="carousel-slide" style="background: linear-gradient(45deg, #2ecc71, #27ae60); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                            Film 3
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rating iOS -->
+            <div class="demo-item">
+                <div class="demo-header">⭐ Rating - Style iOS</div>
+                <div class="demo-content">
+                    <p>Note ce produit :</p>
+                    <div class="rating-ios" data-plugin="rating" data-options='{"value": 3, "max": 5, "readonly": false}'></div>
+                    
+                    <div class="code-block">/* CSS Personnalisé */
+.rating-ios {
+    filter: drop-shadow(0 2px 4px rgba(255,193,7,0.3));
+}
+.rating-ios span:hover {
+    transform: scale(1.2);
+}</div>
+                </div>
+            </div>
+
+            <!-- Toast Slack -->
+            <div class="demo-item">
+                <div class="demo-header">🍞 Toast - Style Slack</div>
+                <div class="demo-content">
+                    <button class="btn btn-success" onclick="showSlackToast('success')">Toast Succès</button>
+                    <button class="btn btn-danger" onclick="showSlackToast('error')">Toast Erreur</button>
+                    
+                    <div class="code-block">/* CSS Personnalisé */
+.toast-slack.cubfirst-toast {
+    border-left: 4px solid;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}</div>
+                </div>
+            </div>
+
+            <!-- Accordion GitHub -->
+            <div class="demo-item">
+                <div class="demo-header">🪗 Accordion - Style GitHub</div>
+                <div class="demo-content">
+                    <div class="accordion-github" data-plugin="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">📁 Documentation</div>
+                            <div class="accordion-content">
+                                Guide d'utilisation et exemples de code.
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">🐛 Issues</div>
+                            <div class="accordion-content">
+                                Rapports de bugs et demandes de fonctionnalités.
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">🔧 Settings</div>
+                            <div class="accordion-content">
+                                Configuration du projet et paramètres.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <h2>🔧 Comment customiser</h2>
+            
+            <h3>1. Customisation CSS</h3>
+            <div class="example-box">
+                <p><strong>Méthode :</strong> Surcharger les classes CSS avec des sélecteurs plus spécifiques</p>
+                <div class="code-block">/* Personnaliser une modal */
+.ma-modal-custom .cubfirst-modal-content {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 20px;
+}
+
+/* Personnaliser les tabs */
+.mes-tabs .tab-title.active {
+    background: #ff6b6b;
+    color: white;
+}</div>
+            </div>
+
+            <h3>2. Modification structurelle</h3>
+            <div class="example-box">
+                <p><strong>Méthode :</strong> Modifier le HTML avant que cubFirst s'initialise</p>
+                <div class="code-block">&lt;!-- Structure personnalisée --&gt;
+&lt;div data-plugin="modal" data-options='{"trigger": "#btn"}'&gt;
+    &lt;div class="modal-content"&gt;
+        &lt;header&gt;Mon header custom&lt;/header&gt;
+        &lt;main&gt;Contenu principal&lt;/main&gt;
+        &lt;footer&gt;Actions personnalisées&lt;/footer&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</div>
+            </div>
+
+            <h3>3. Modification dynamique (Carousel uniquement)</h3>
+            <div class="example-box">
+                <p><strong>Méthode :</strong> Utiliser l'API publique</p>
+                <div class="code-block">// Récupérer l'API
+const carousel = cubFirst.getAPI('#monCarousel', 'carousel');
+
+// Modifier dynamiquement
+carousel.setSpeed(1000);
+carousel.goTo(2);
+carousel.pause();</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 Prochaines améliorations</h2>
+            <p>Pour rendre <strong>tous</strong> les composants aussi flexibles que le carousel :</p>
+            
+            <h3>📋 Roadmap API publique</h3>
+            <ul>
+                <li><strong>Modal API</strong> : <code>modal.open()</code>, <code>modal.close()</code>, <code>modal.setContent()</code></li>
+                <li><strong>Tabs API</strong> : <code>tabs.goTo(index)</code>, <code>tabs.addTab()</code>, <code>tabs.removeTab()</code></li>
+                <li><strong>Toast API</strong> : <code>toast.update()</code>, <code>toast.close()</code></li>
+                <li><strong>Rating API</strong> : <code>rating.setValue()</code>, <code>rating.setReadonly()</code></li>
+            </ul>
+            
+            <h3>📡 Événements personnalisés</h3>
+            <ul>
+                <li><code>modalOpen</code>, <code>modalClose</code></li>
+                <li><code>tabChange</code>, <code>accordionToggle</code></li>
+                <li><code>ratingChange</code>, <code>dropdownOpen</code></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script src="dist/cubfirst.min.js"></script>
+    <script>
+        function showSlackToast(type) {
+            const toast = document.createElement('div');
+            toast.className = `cubfirst-toast toast-slack ${type}`;
+            toast.textContent = type === 'success' ? 'Opération réussie !' : 'Une erreur est survenue';
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.style.opacity = "1", 10);
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+        
+        // Ajouter des flèches aux accordions GitHub
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionHeaders = document.querySelectorAll('.accordion-github .accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const isOpen = header.nextElementSibling.style.display === 'block';
+                    header.classList.toggle('open', !isOpen);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

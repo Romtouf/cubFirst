@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cubFirst - Démo Complète</title>
+    <style>
+        /* Reset et styles de base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .demo-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .demo-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Boutons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        /* Formulaires */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        /* Tabs */
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1rem;
+        }
+        
+        .tab-title {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-title:hover {
+            background: #f8f9fa;
+        }
+        
+        .tab-title.active {
+            border-bottom-color: #667eea;
+            color: #667eea;
+            font-weight: 500;
+        }
+        
+        .tab-content {
+            padding: 1rem 0;
+        }
+        
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 200px;
+        }
+        
+        .carousel-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .carousel-slide:nth-child(1) { background: linear-gradient(45deg, #ff6b6b, #ee5a24); }
+        .carousel-slide:nth-child(2) { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
+        .carousel-slide:nth-child(3) { background: linear-gradient(45deg, #a8edea, #fed6e3); color: #333; }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        .carousel-prev { left: 10px; }
+        .carousel-next { right: 10px; }
+        
+        /* Rating */
+        .rating-display {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        /* Accordion */
+        .accordion-item {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .accordion-header {
+            padding: 1rem;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: #e9ecef;
+        }
+        
+        .accordion-content {
+            padding: 1rem;
+            border-top: 1px solid #ddd;
+        }
+        
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            min-width: 200px;
+            z-index: 1000;
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Progress */
+        .progress-demo {
+            margin: 2rem 0;
+        }
+        
+        /* Copy demo */
+        .copy-target {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 1rem 0;
+        }
+        
+        /* Filter demo */
+        .filter-buttons {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .filter-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-item[data-tag*="web"] { background: #e3f2fd; }
+        .filter-item[data-tag*="mobile"] { background: #f3e5f5; }
+        .filter-item[data-tag*="design"] { background: #e8f5e8; }
+        
+        /* Load more demo */
+        .load-more-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .load-more-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Dark mode */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #fff;
+        }
+        
+        .dark-mode .demo-card {
+            background: #2d2d2d;
+            color: #fff;
+        }
+        
+        .dark-mode .form-control {
+            background: #3d3d3d;
+            border-color: #555;
+            color: #fff;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .demo-grid { grid-template-columns: 1fr; }
+            .container { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🚀 cubFirst</h1>
+            <p>Le framework HTML-first qui révolutionne l'interactivité web</p>
+            <div data-plugin="progress-scroll"></div>
+        </div>
+
+        <!-- Démo Grid -->
+        <div class="demo-grid">
+            
+            <!-- Modal Demo -->
+            <div class="demo-card">
+                <h3>🪟 Modal</h3>
+                <p>Ouvrez une modale avec un simple attribut HTML</p>
+                <button id="modal-trigger" class="btn">Ouvrir la modale</button>
+                
+                <div data-plugin="modal" data-options='{"trigger": "#modal-trigger"}' style="display: none;">
+                    <div class="modal-content">
+                        <h2>Modale cubFirst</h2>
+                        <p>Cette modale fonctionne avec juste un attribut <code>data-plugin="modal"</code> !</p>
+                        <p>Fermez avec Escape ou en cliquant à l'extérieur.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Demo -->
+            <div class="demo-card">
+                <h3>📑 Tabs</h3>
+                <p>Système d'onglets sans JavaScript à écrire</p>
+                
+                <div data-plugin="tabs">
+                    <div class="tab-nav">
+                        <div data-tab="tab1" class="tab-title">Onglet 1</div>
+                        <div data-tab="tab2" class="tab-title">Onglet 2</div>
+                        <div data-tab="tab3" class="tab-title">Onglet 3</div>
+                    </div>
+                    <div class="tab-content" data-tab="tab1">
+                        <p>Contenu du premier onglet. Simple et efficace !</p>
+                    </div>
+                    <div class="tab-content" data-tab="tab2">
+                        <p>Deuxième onglet avec du contenu différent.</p>
+                    </div>
+                    <div class="tab-content" data-tab="tab3">
+                        <p>Troisième onglet pour montrer la flexibilité.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Demo -->
+            <div class="demo-card">
+                <h3>🎠 Carousel</h3>
+                <p>Carrousel automatique avec navigation</p>
+                
+                <div data-plugin="carousel" data-options='{"interval": 4000}' class="carousel-container">
+                    <div class="carousel-slide">Slide 1</div>
+                    <div class="carousel-slide">Slide 2</div>
+                    <div class="carousel-slide">Slide 3</div>
+                    <button data-carousel="prev" class="carousel-nav carousel-prev">‹</button>
+                    <button data-carousel="next" class="carousel-nav carousel-next">›</button>
+                </div>
+            </div>
+
+            <!-- Toast Demo -->
+            <div class="demo-card">
+                <h3>🍞 Toast</h3>
+                <p>Notifications temporaires élégantes</p>
+                
+                <button class="btn btn-success" onclick="cubFirst.toast('Succès !', 'success')">Toast Succès</button>
+                <button class="btn btn-danger" onclick="cubFirst.toast('Erreur !', 'error')">Toast Erreur</button>
+                <button class="btn" onclick="cubFirst.toast('Information', 'info')">Toast Info</button>
+            </div>
+
+            <!-- Rating Demo -->
+            <div class="demo-card">
+                <h3>⭐ Rating</h3>
+                <p>Système d'évaluation par étoiles</p>
+                
+                <div>Note en lecture seule :</div>
+                <div data-plugin="rating" data-options='{"value": 4, "max": 5, "readonly": true}' class="rating-display"></div>
+                
+                <div>Note interactive :</div>
+                <div data-plugin="rating" data-options='{"value": 0, "max": 5, "readonly": false}' class="rating-display"></div>
+            </div>
+
+            <!-- Accordion Demo -->
+            <div class="demo-card">
+                <h3>🪗 Accordion</h3>
+                <p>Sections pliables et dépliables</p>
+                
+                <div data-plugin="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">Section 1</div>
+                        <div class="accordion-content">
+                            Contenu de la première section. Cliquez sur les en-têtes pour naviguer.
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Section 2</div>
+                        <div class="accordion-content">
+                            Contenu de la deuxième section avec plus d'informations.
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Section 3</div>
+                        <div class="accordion-content">
+                            Troisième section pour démontrer le fonctionnement.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dropdown Demo -->
+            <div class="demo-card">
+                <h3>📋 Dropdown</h3>
+                <p>Menu déroulant contextuel</p>
+                
+                <div data-plugin="dropdown" data-options='{"trigger": "#dropdown-btn"}' class="dropdown">
+                    <button id="dropdown-btn" class="btn">Menu ▼</button>
+                    <div class="dropdown-menu" hidden>
+                        <a href="#" class="dropdown-item">Action 1</a>
+                        <a href="#" class="dropdown-item">Action 2</a>
+                        <a href="#" class="dropdown-item">Action 3</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copy Demo -->
+            <div class="demo-card">
+                <h3>📋 Copy</h3>
+                <p>Copie de texte dans le presse-papiers</p>
+                
+                <div id="copy-text" class="copy-target">
+                    npm install cubfirst
+                </div>
+                <button data-plugin="copy" data-options='{"target": "#copy-text"}' class="btn">
+                    Copier le code
+                </button>
+            </div>
+
+            <!-- Toggle Demo -->
+            <div class="demo-card">
+                <h3>👁️ Toggle</h3>
+                <p>Afficher/masquer des éléments</p>
+                
+                <button data-plugin="toggle" data-options='{"target": "#toggle-content"}' class="btn">
+                    Toggle contenu
+                </button>
+                <div id="toggle-content" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 4px;">
+                    Ce contenu peut être affiché ou masqué !
+                </div>
+            </div>
+
+            <!-- Countdown Demo -->
+            <div class="demo-card">
+                <h3>⏰ Countdown</h3>
+                <p>Compte à rebours dynamique</p>
+                
+                <div data-plugin="countdown" data-options='{"to": "2024-12-31T23:59:59"}' style="font-size: 1.5rem; font-weight: bold; color: #667eea;"></div>
+            </div>
+
+            <!-- Dark Mode Demo -->
+            <div class="demo-card">
+                <h3>🌙 Dark Mode</h3>
+                <p>Basculer entre thème clair et sombre</p>
+                
+                <button data-plugin="darkmode-toggle" class="btn">
+                    Basculer le thème
+                </button>
+            </div>
+
+            <!-- Input Mask Demo -->
+            <div class="demo-card">
+                <h3>📱 Input Mask</h3>
+                <p>Formatage automatique des champs</p>
+                
+                <div class="form-group">
+                    <label>Téléphone :</label>
+                    <input type="text" data-plugin="input-mask" data-options='{"type": "phone"}' class="form-control" placeholder="Tapez votre numéro">
+                </div>
+                
+                <div class="form-group">
+                    <label>Date :</label>
+                    <input type="text" data-plugin="input-mask" data-options='{"type": "date"}' class="form-control" placeholder="JJ/MM/AAAA">
+                </div>
+            </div>
+
+            <!-- Filter Demo -->
+            <div class="demo-card">
+                <h3>🔍 Filter</h3>
+                <p>Filtrage d'éléments par catégorie</p>
+                
+                <div class="filter-buttons">
+                    <button data-plugin="filter" data-options='{"target": ".filter-item", "value": "all"}' class="btn">Tout</button>
+                    <button data-plugin="filter" data-options='{"target": ".filter-item", "value": "web"}' class="btn">Web</button>
+                    <button data-plugin="filter" data-options='{"target": ".filter-item", "value": "mobile"}' class="btn">Mobile</button>
+                    <button data-plugin="filter" data-options='{"target": ".filter-item", "value": "design"}' class="btn">Design</button>
+                </div>
+                
+                <div class="filter-items">
+                    <div class="filter-item" data-tag="web">Projet Web 1</div>
+                    <div class="filter-item" data-tag="mobile">App Mobile 1</div>
+                    <div class="filter-item" data-tag="design">Design 1</div>
+                    <div class="filter-item" data-tag="web mobile">Projet Hybride</div>
+                    <div class="filter-item" data-tag="design">Design 2</div>
+                    <div class="filter-item" data-tag="web">Projet Web 2</div>
+                </div>
+            </div>
+
+            <!-- Load More Demo -->
+            <div class="demo-card">
+                <h3>📚 Load More</h3>
+                <p>Chargement progressif de contenu</p>
+                
+                <div class="load-more-items">
+                    <div class="load-more-item">Article 1</div>
+                    <div class="load-more-item">Article 2</div>
+                    <div class="load-more-item">Article 3</div>
+                    <div class="load-more-item">Article 4</div>
+                    <div class="load-more-item">Article 5</div>
+                    <div class="load-more-item">Article 6</div>
+                    <div class="load-more-item">Article 7</div>
+                    <div class="load-more-item">Article 8</div>
+                </div>
+                
+                <button data-plugin="load-more" data-options='{"target": ".load-more-item", "batch": 3}' class="btn">
+                    Charger plus
+                </button>
+            </div>
+
+            <!-- Hamburger Menu Demo -->
+            <div class="demo-card">
+                <h3>🍔 Hamburger Menu</h3>
+                <p>Menu mobile avec animation</p>
+                
+                <div data-plugin="hamburger" data-options='{"target": "#mobile-menu"}' style="display: inline-block;"></div>
+                
+                <div id="mobile-menu" class="mobile-menu" style="display: none;">
+                    <a href="#">Accueil</a>
+                    <a href="#">À propos</a>
+                    <a href="#">Services</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+
+            <!-- Tooltip Demo -->
+            <div class="demo-card">
+                <h3>💬 Tooltip</h3>
+                <p>Info-bulles au survol</p>
+                
+                <p>Survolez 
+                    <span data-plugin="tooltip" data-options='{"text": "Ceci est un tooltip !"}' style="color: #667eea; cursor: help; text-decoration: underline;">
+                        ce texte
+                    </span> 
+                    pour voir le tooltip.
+                </p>
+                
+                <button data-plugin="tooltip" data-options='{"text": "Tooltip sur un bouton"}' class="btn">
+                    Bouton avec tooltip
+                </button>
+            </div>
+
+            <!-- Scroll To Demo -->
+            <div class="demo-card">
+                <h3>🎯 Scroll To</h3>
+                <p>Navigation fluide vers une section</p>
+                
+                <a href="#" data-plugin="scrollto" data-options='{"target": ".hero", "offset": 20}' class="btn">
+                    Retour en haut
+                </a>
+            </div>
+
+            <!-- Confirm Demo -->
+            <div class="demo-card">
+                <h3>❓ Confirm</h3>
+                <p>Confirmation avant action</p>
+                
+                <button data-plugin="confirm" data-options='{"message": "Êtes-vous sûr de vouloir supprimer ?"}' class="btn btn-danger" onclick="alert('Action confirmée !')">
+                    Supprimer
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; color: white; margin-top: 3rem;">
+            <h2>🎉 Toutes ces interactions avec juste des attributs HTML !</h2>
+            <p style="margin: 1rem 0;">cubFirst v2.0 - Le futur de l'interactivité web</p>
+            <div style="margin-top: 2rem;">
+                <code style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 4px;">
+                    &lt;script src="cubfirst.min.js"&gt;&lt;/script&gt;
+                </code>
+            </div>
+        </div>
+    </div>
+
+    <!-- cubFirst Script -->
+    <script src="dist/cubfirst.min.js"></script>
+</body>
+</html>
