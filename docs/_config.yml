@@ -1,0 +1,77 @@
+# Configuration de la documentation cubFirst
+
+# Informations du site
+title: "cubFirst Documentation"
+description: "Framework JavaScript HTML-first - Documentation complète avec guides, tutoriels et démonstrations"
+author: "Romtouf"
+version: "1.0.0"
+url: "https://romtouf.github.io/cubfirst"
+
+# Navigation
+navigation:
+  - title: "Accueil"
+    url: "README.md"
+  - title: "Démarrage Rapide"
+    url: "getting-started.md"
+  - title: "Documentation Complète"
+    url: "index.md"
+  - title: "Démonstrations"
+    url: "demos.html"
+  - title: "Guide Avancé"
+    url: "advanced-guide.md"
+  - title: "Tutoriels"
+    url: "tutorials.md"
+  - title: "Test Rapide"
+    url: "quick-test.html"
+
+# Plugins par catégorie
+plugins:
+  interface:
+    - modal
+    - drawer
+    - sidebar
+    - sticky
+  navigation:
+    - tabs
+    - accordion
+    - dropdown
+    - breadcrumb
+  forms:
+    - input-mask
+    - date-picker
+    - file-upload
+    - multi-select
+    - rating
+  controls:
+    - slider
+    - switch
+    - color-picker
+  data:
+    - data-table
+    - pagination
+    - filter
+    - search
+  animation:
+    - reveal
+    - carousel
+    - hover-preview
+    - grid-expand
+  utilities:
+    - copy
+    - toast
+    - alert
+    - confirm
+    - loader
+
+# Configuration des exemples
+examples:
+  cdn_url: "https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v1.0.0/dist/cubfirst.min.js"
+  tailwind_cdn: "https://cdn.tailwindcss.com"
+  
+# Thème et style
+theme:
+  primary_color: "#3b82f6"
+  secondary_color: "#6b7280"
+  success_color: "#10b981"
+  warning_color: "#f59e0b"
+  error_color: "#ef4444"

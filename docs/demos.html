@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Démonstrations Interactives - cubFirst</title>
+    
+    <!-- cubFirst Framework -->
+    <script src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v1.0.0/dist/cubfirst.min.js" defer></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Styles personnalisés -->
+    <style>
+        .demo-section {
+            transition: all 0.3s ease;
+        }
+        .demo-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .star-rating {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .star-rating:hover {
+            color: #f59e0b;
+        }
+        .carousel-slide {
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-blue-600">🎮 cubFirst Demos</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#interface" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Interface</a>
+                    <a href="#navigation" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Navigation</a>
+                    <a href="#formulaires" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Formulaires</a>
+                    <a href="#animations" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Animations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-bold mb-6">Démonstrations Interactives</h1>
+            <p class="text-xl mb-8">Testez tous les plugins cubFirst en temps réel</p>
+            <div class="flex justify-center space-x-4">
+                <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    Voir le Code Source
+                </button>
+                <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                    Documentation
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Interface & Overlays -->
+        <section id="interface" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">🎭 Interface & Overlays</h2>
+            
+            <!-- Modal Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Modal - Fenêtres Modales</h3>
+                <p class="text-gray-600 mb-6">Créez des fenêtres modales élégantes avec un simple attribut HTML.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <button id="modal-demo-1" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors mb-4">
+                            Ouvrir Modal Simple
+                        </button>
+                        <button id="modal-demo-2" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors mb-4 ml-4">
+                            Modal avec Animation
+                        </button>
+                        
+                        <!-- Modal Simple -->
+                        <div data-plugin="modal" data-options='{"trigger": "#modal-demo-1"}' class="hidden">
+                            <div class="bg-white p-8 rounded-xl shadow-2xl max-w-md mx-auto">
+                                <h4 class="text-2xl font-bold mb-4 text-gray-800">Modal Simple</h4>
+                                <p class="text-gray-600 mb-6">Ceci est une modal créée avec cubFirst. Aucun JavaScript requis !</p>
+                                <div class="flex space-x-4">
+                                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors" onclick="this.closest('[data-plugin=modal]').style.display='none'">
+                                        Fermer
+                                    </button>
+                                    <button class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors" onclick="this.closest('[data-plugin=modal]').style.display='none'">
+                                        Annuler
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Modal avec Animation -->
+                        <div data-plugin="modal" data-options='{"trigger": "#modal-demo-2", "animation": "slide"}' class="hidden">
+                            <div class="bg-gradient-to-br from-purple-500 to-pink-500 p-8 rounded-xl shadow-2xl max-w-md mx-auto text-white">
+                                <h4 class="text-2xl font-bold mb-4">Modal Animée</h4>
+                                <p class="mb-6 opacity-90">Cette modal utilise une animation de glissement !</p>
+                                <button class="bg-white text-purple-600 px-4 py-2 rounded hover:bg-gray-100 transition-colors" onclick="this.closest('[data-plugin=modal]').style.display='none'">
+                                    Fermer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Modal Simple</div>
+                        <div class="text-blue-400">&lt;button id="modal-demo-1"&gt;Ouvrir Modal&lt;/button&gt;</div>
+                        <div class="text-blue-400">&lt;div data-plugin="modal" data-options='{"trigger": "#modal-demo-1"}'&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;div class="modal-content"&gt;Contenu&lt;/div&gt;</div>
+                        <div class="text-blue-400">&lt;/div&gt;</div>
+                        <div class="text-gray-400 mt-4">// Aucun JavaScript requis !</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Drawer Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Drawer - Tiroirs Latéraux</h3>
+                <p class="text-gray-600 mb-6">Créez des menus latéraux élégants pour la navigation mobile.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <button id="drawer-left" class="bg-indigo-500 text-white px-6 py-3 rounded-lg hover:bg-indigo-600 transition-colors mb-4">
+                            Drawer Gauche
+                        </button>
+                        <button id="drawer-right" class="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors mb-4 ml-4">
+                            Drawer Droite
+                        </button>
+                        
+                        <!-- Drawer Gauche -->
+                        <div data-plugin="drawer" data-options='{"trigger": "#drawer-left", "position": "left"}' class="hidden">
+                            <div class="bg-white h-full w-80 p-6 shadow-xl">
+                                <h4 class="text-xl font-bold mb-6 text-gray-800">Menu de Navigation</h4>
+                                <nav class="space-y-3">
+                                    <a href="#" class="block py-3 px-4 hover:bg-gray-100 rounded-lg transition-colors">🏠 Accueil</a>
+                                    <a href="#" class="block py-3 px-4 hover:bg-gray-100 rounded-lg transition-colors">📝 Articles</a>
+                                    <a href="#" class="block py-3 px-4 hover:bg-gray-100 rounded-lg transition-colors">👤 Profil</a>
+                                    <a href="#" class="block py-3 px-4 hover:bg-gray-100 rounded-lg transition-colors">⚙️ Paramètres</a>
+                                    <a href="#" class="block py-3 px-4 hover:bg-gray-100 rounded-lg transition-colors">📞 Contact</a>
+                                </nav>
+                            </div>
+                        </div>
+                        
+                        <!-- Drawer Droite -->
+                        <div data-plugin="drawer" data-options='{"trigger": "#drawer-right", "position": "right"}' class="hidden">
+                            <div class="bg-gradient-to-b from-purple-600 to-blue-600 h-full w-80 p-6 shadow-xl text-white">
+                                <h4 class="text-xl font-bold mb-6">Panier d'Achat</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-center space-x-3 p-3 bg-white bg-opacity-20 rounded-lg">
+                                        <div class="w-12 h-12 bg-white rounded"></div>
+                                        <div>
+                                            <div class="font-semibold">Produit 1</div>
+                                            <div class="text-sm opacity-75">29.99€</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 p-3 bg-white bg-opacity-20 rounded-lg">
+                                        <div class="w-12 h-12 bg-white rounded"></div>
+                                        <div>
+                                            <div class="font-semibold">Produit 2</div>
+                                            <div class="text-sm opacity-75">19.99€</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="w-full mt-6 bg-white text-purple-600 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                                    Commander
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Drawer</div>
+                        <div class="text-blue-400">&lt;button id="drawer-left"&gt;Menu&lt;/button&gt;</div>
+                        <div class="text-blue-400">&lt;div data-plugin="drawer" data-options='{"trigger": "#drawer-left", "position": "left"}'&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;div class="drawer-content"&gt;Contenu&lt;/div&gt;</div>
+                        <div class="text-blue-400">&lt;/div&gt;</div>
+                        <div class="text-gray-400 mt-4">// Position: left, right, top, bottom</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Navigation -->
+        <section id="navigation" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">📑 Navigation & Organisation</h2>
+            
+            <!-- Tabs Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Tabs - Système d'Onglets</h3>
+                <p class="text-gray-600 mb-6">Organisez votre contenu en onglets avec une navigation fluide.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <div data-plugin="tabs" class="w-full">
+                            <div class="flex border-b">
+                                <button class="tab-title px-6 py-3 border-b-2 border-blue-500 text-blue-600 font-semibold" data-tab="tab1">
+                                    📊 Statistiques
+                                </button>
+                                <button class="tab-title px-6 py-3 text-gray-600 hover:text-blue-600 transition-colors" data-tab="tab2">
+                                    📈 Graphiques
+                                </button>
+                                <button class="tab-title px-6 py-3 text-gray-600 hover:text-blue-600 transition-colors" data-tab="tab3">
+                                    ⚙️ Paramètres
+                                </button>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="tab-content" data-tab-content="tab1">
+                                    <h4 class="text-xl font-semibold mb-4">Vue d'ensemble des statistiques</h4>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-blue-100 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-blue-600">1,234</div>
+                                            <div class="text-sm text-gray-600">Utilisateurs</div>
+                                        </div>
+                                        <div class="bg-green-100 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-green-600">5,678</div>
+                                            <div class="text-sm text-gray-600">Vues</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content hidden" data-tab-content="tab2">
+                                    <h4 class="text-xl font-semibold mb-4">Graphiques et visualisations</h4>
+                                    <div class="bg-gray-100 h-48 rounded-lg flex items-center justify-center">
+                                        <div class="text-gray-500">📊 Graphique interactif ici</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content hidden" data-tab-content="tab3">
+                                    <h4 class="text-xl font-semibold mb-4">Paramètres de configuration</h4>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between">
+                                            <span>Notifications par email</span>
+                                            <div data-plugin="switch" data-options='{"checked": true}'>
+                                                <label class="flex items-center cursor-pointer">
+                                                    <input type="checkbox" class="sr-only">
+                                                    <div class="switch-track bg-blue-500 rounded-full p-1 transition-colors w-12">
+                                                        <div class="switch-thumb bg-white rounded-full shadow transition-transform w-4 h-4 ml-auto"></div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span>Mode sombre</span>
+                                            <div data-plugin="switch" data-options='{"checked": false}'>
+                                                <label class="flex items-center cursor-pointer">
+                                                    <input type="checkbox" class="sr-only">
+                                                    <div class="switch-track bg-gray-300 rounded-full p-1 transition-colors w-12">
+                                                        <div class="switch-thumb bg-white rounded-full shadow transition-transform w-4 h-4"></div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Tabs</div>
+                        <div class="text-blue-400">&lt;div data-plugin="tabs"&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;div class="flex border-b"&gt;</div>
+                        <div class="text-blue-400 ml-8">&lt;button class="tab-title" data-tab="tab1"&gt;Onglet 1&lt;/button&gt;</div>
+                        <div class="text-blue-400 ml-8">&lt;button class="tab-title" data-tab="tab2"&gt;Onglet 2&lt;/button&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;/div&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;div class="tab-content" data-tab-content="tab1"&gt;Contenu 1&lt;/div&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;div class="tab-content hidden" data-tab-content="tab2"&gt;Contenu 2&lt;/div&gt;</div>
+                        <div class="text-blue-400">&lt;/div&gt;</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Accordion - Accordéons</h3>
+                <p class="text-gray-600 mb-6">Créez des sections pliables pour organiser votre contenu.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <div data-plugin="accordion" class="space-y-2">
+                            <div class="border rounded-lg">
+                                <button class="accordion-header w-full text-left p-4 bg-gray-50 hover:bg-gray-100 transition-colors" data-accordion="item1">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-semibold text-gray-800">Qu'est-ce que cubFirst ?</h4>
+                                        <span class="text-gray-500">+</span>
+                                    </div>
+                                </button>
+                                <div class="accordion-content hidden p-4 border-t bg-white">
+                                    <p class="text-gray-600">cubFirst est un framework JavaScript HTML-first qui permet de créer des interfaces interactives sans écrire de JavaScript. Tout se fait via des attributs HTML !</p>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg">
+                                <button class="accordion-header w-full text-left p-4 bg-gray-50 hover:bg-gray-100 transition-colors" data-accordion="item2">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-semibold text-gray-800">Comment l'installer ?</h4>
+                                        <span class="text-gray-500">+</span>
+                                    </div>
+                                </button>
+                                <div class="accordion-content hidden p-4 border-t bg-white">
+                                    <p class="text-gray-600 mb-4">Ajoutez simplement ce script à votre page :</p>
+                                    <div class="bg-gray-100 p-3 rounded text-sm font-mono">
+                                        &lt;script src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v1.0.0/dist/cubfirst.min.js"&gt;&lt;/script&gt;
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg">
+                                <button class="accordion-header w-full text-left p-4 bg-gray-50 hover:bg-gray-100 transition-colors" data-accordion="item3">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-semibold text-gray-800">Quels plugins sont disponibles ?</h4>
+                                        <span class="text-gray-500">+</span>
+                                    </div>
+                                </button>
+                                <div class="accordion-content hidden p-4 border-t bg-white">
+                                    <p class="text-gray-600">cubFirst propose 47+ plugins : modales, onglets, carousels, formulaires, animations, et bien plus encore !</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Accordion</div>
+                        <div class="text-blue-400">&lt;div data-plugin="accordion"&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;div class="border rounded"&gt;</div>
+                        <div class="text-blue-400 ml-8">&lt;button class="accordion-header" data-accordion="item1"&gt;</div>
+                        <div class="text-blue-400 ml-12">Titre de la section</div>
+                        <div class="text-blue-400 ml-8">&lt;/button&gt;</div>
+                        <div class="text-blue-400 ml-8">&lt;div class="accordion-content hidden"&gt;Contenu&lt;/div&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;/div&gt;</div>
+                        <div class="text-blue-400">&lt;/div&gt;</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Formulaires -->
+        <section id="formulaires" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">📝 Formulaires & Saisie</h2>
+            
+            <!-- Input Mask Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Input Mask - Masques de Saisie</h3>
+                <p class="text-gray-600 mb-6">Formatez automatiquement les saisies utilisateur (téléphone, date, carte bancaire...).</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Téléphone français</label>
+                            <input 
+                                type="tel" 
+                                data-plugin="input-mask" 
+                                data-options='{"type": "phone", "format": "+33 (0)X XX XX XX XX"}'
+                                placeholder="+33 (0)X XX XX XX XX"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Date de naissance</label>
+                            <input 
+                                type="text" 
+                                data-plugin="input-mask" 
+                                data-options='{"type": "date", "format": "DD/MM/YYYY"}'
+                                placeholder="JJ/MM/AAAA"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Carte bancaire</label>
+                            <input 
+                                type="text" 
+                                data-plugin="input-mask" 
+                                data-options='{"type": "card", "format": "XXXX XXXX XXXX XXXX"}'
+                                placeholder="1234 5678 9012 3456"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Montant en euros</label>
+                            <input 
+                                type="text" 
+                                data-plugin="input-mask" 
+                                data-options='{"type": "currency", "symbol": "€", "decimals": 2}'
+                                placeholder="0,00 €"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Input Mask</div>
+                        <div class="text-blue-400">&lt;input data-plugin="input-mask" data-options='{"type": "phone"}'&gt;</div>
+                        <div class="text-gray-400 mt-4">// Types disponibles :</div>
+                        <div class="text-yellow-400">// - phone (téléphone)</div>
+                        <div class="text-yellow-400">// - date (date)</div>
+                        <div class="text-yellow-400">// - card (carte bancaire)</div>
+                        <div class="text-yellow-400">// - currency (monétaire)</div>
+                        <div class="text-yellow-400">// - custom (personnalisé)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Rating Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Rating - Système d'Étoiles</h3>
+                <p class="text-gray-600 mb-6">Créez des systèmes d'évaluation avec des étoiles interactives.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Évaluation simple</h4>
+                            <div data-plugin="rating" data-options='{"value": 0, "max": 5, "labels": ["Terrible", "Mauvais", "Moyen", "Bien", "Excellent"]}'></div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Note en lecture seule</h4>
+                            <div data-plugin="rating" data-options='{"value": 4.5, "max": 5, "readonly": true}'></div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Évaluation avec demi-notes</h4>
+                            <div data-plugin="rating" data-options='{"value": 0, "max": 5, "halfRatings": true}'></div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Rating</div>
+                        <div class="text-blue-400">&lt;div data-plugin="rating" data-options='{"value": 0, "max": 5}'&gt;&lt;/div&gt;</div>
+                        <div class="text-gray-400 mt-4">// Options :</div>
+                        <div class="text-yellow-400">// - value: note initiale</div>
+                        <div class="text-yellow-400">// - max: note maximale</div>
+                        <div class="text-yellow-400">// - readonly: mode lecture seule</div>
+                        <div class="text-yellow-400">// - labels: libellés personnalisés</div>
+                        <div class="text-yellow-400">// - halfRatings: demi-notes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Animations -->
+        <section id="animations" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">🎬 Animations & Effets</h2>
+            
+            <!-- Carousel Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Carousel - Carrousel d'Images</h3>
+                <p class="text-gray-600 mb-6">Créez des carrousels élégants avec navigation automatique et contrôles manuels.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <div data-plugin="carousel" data-options='{"interval": 3000, "autoplay": true, "indicators": true}'>
+                            <div class="carousel-container relative overflow-hidden rounded-lg h-80">
+                                <div class="carousel-slides flex h-full">
+                                    <div class="carousel-slide w-full flex-shrink-0 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white">
+                                        <div class="text-center">
+                                            <h4 class="text-3xl font-bold mb-4">Slide 1</h4>
+                                            <p class="text-xl">Premier slide du carousel</p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-slide w-full flex-shrink-0 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white">
+                                        <div class="text-center">
+                                            <h4 class="text-3xl font-bold mb-4">Slide 2</h4>
+                                            <p class="text-xl">Deuxième slide du carousel</p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-slide w-full flex-shrink-0 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white">
+                                        <div class="text-center">
+                                            <h4 class="text-3xl font-bold mb-4">Slide 3</h4>
+                                            <p class="text-xl">Troisième slide du carousel</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Contrôles de navigation -->
+                                <button class="carousel-prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-3 text-gray-700 hover:text-gray-900 transition-all">
+                                    ‹
+                                </button>
+                                <button class="carousel-next absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-3 text-gray-700 hover:text-gray-900 transition-all">
+                                    ›
+                                </button>
+                                
+                                <!-- Indicateurs -->
+                                <div class="carousel-indicators absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                                    <button class="w-3 h-3 rounded-full bg-white bg-opacity-75 hover:bg-opacity-100 transition-all" data-slide="0"></button>
+                                    <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition-all" data-slide="1"></button>
+                                    <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition-all" data-slide="2"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Carousel</div>
+                        <div class="text-blue-400">&lt;div data-plugin="carousel" data-options='{"interval": 3000}'&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;div class="carousel-slides flex"&gt;</div>
+                        <div class="text-blue-400 ml-8">&lt;div class="carousel-slide"&gt;Slide 1&lt;/div&gt;</div>
+                        <div class="text-blue-400 ml-8">&lt;div class="carousel-slide"&gt;Slide 2&lt;/div&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;/div&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;button class="carousel-prev"&gt;‹&lt;/button&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;button class="carousel-next"&gt;›&lt;/button&gt;</div>
+                        <div class="text-blue-400">&lt;/div&gt;</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reveal Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Reveal - Animations d'Apparition</h3>
+                <p class="text-gray-600 mb-6">Animez l'apparition des éléments quand ils entrent dans le viewport.</p>
+                
+                <div class="space-y-8">
+                    <div data-plugin="reveal" data-options='{"animation": "fadeInUp", "delay": 0, "duration": 600}'>
+                        <div class="bg-blue-100 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold mb-2 text-blue-800">Animation Fade In Up</h4>
+                            <p class="text-blue-700">Ce contenu apparaît avec une animation de fondu vers le haut.</p>
+                        </div>
+                    </div>
+                    
+                    <div data-plugin="reveal" data-options='{"animation": "slideInLeft", "delay": 200, "duration": 600}'>
+                        <div class="bg-green-100 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold mb-2 text-green-800">Animation Slide In Left</h4>
+                            <p class="text-green-700">Ce contenu glisse depuis la gauche avec un délai.</p>
+                        </div>
+                    </div>
+                    
+                    <div data-plugin="reveal" data-options='{"animation": "zoomIn", "delay": 400, "duration": 600}'>
+                        <div class="bg-purple-100 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold mb-2 text-purple-800">Animation Zoom In</h4>
+                            <p class="text-purple-700">Ce contenu apparaît avec un effet de zoom.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Utilitaires -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">🔧 Utilitaires & Outils</h2>
+            
+            <!-- Toast Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Toast - Notifications Temporaires</h3>
+                <p class="text-gray-600 mb-6">Affichez des notifications élégantes qui disparaissent automatiquement.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <button id="toast-success" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors">
+                            Toast de Succès
+                        </button>
+                        <button id="toast-error" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors">
+                            Toast d'Erreur
+                        </button>
+                        <button id="toast-warning" class="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors">
+                            Toast d'Avertissement
+                        </button>
+                        <button id="toast-info" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                            Toast d'Information
+                        </button>
+                        
+                        <!-- Toasts -->
+                        <div data-plugin="toast" data-options='{"trigger": "#toast-success", "message": "Opération réussie !", "type": "success"}'></div>
+                        <div data-plugin="toast" data-options='{"trigger": "#toast-error", "message": "Une erreur est survenue", "type": "error"}'></div>
+                        <div data-plugin="toast" data-options='{"trigger": "#toast-warning", "message": "Attention !", "type": "warning"}'></div>
+                        <div data-plugin="toast" data-options='{"trigger": "#toast-info", "message": "Information importante", "type": "info"}'></div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Toast</div>
+                        <div class="text-blue-400">&lt;button id="show-toast"&gt;Afficher Toast&lt;/button&gt;</div>
+                        <div class="text-blue-400">&lt;div data-plugin="toast" data-options='{"trigger": "#show-toast", "message": "Hello !", "type": "success"}'&gt;&lt;/div&gt;</div>
+                        <div class="text-gray-400 mt-4">// Types : success, error, warning, info</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Copy Demo -->
+            <div class="demo-section bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Copy - Copie dans le Presse-papiers</h3>
+                <p class="text-gray-600 mb-6">Permettez aux utilisateurs de copier du texte en un clic.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div data-plugin="copy" data-options='{"text": "https://github.com/Romtouf/cubfirst", "successMessage": "Lien copié !"}'>
+                            <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                                Copier le lien GitHub
+                            </button>
+                        </div>
+                        
+                        <div data-plugin="copy" data-options='{"text": "console.log(\"Hello cubFirst !\");", "successMessage": "Code copié !"}'>
+                            <button class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                                Copier le code JavaScript
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block p-4 text-sm">
+                        <div class="text-green-400 mb-2">// HTML - Copy</div>
+                        <div class="text-blue-400">&lt;div data-plugin="copy" data-options='{"text": "Texte à copier"}'&gt;</div>
+                        <div class="text-blue-400 ml-4">&lt;button&gt;Copier&lt;/button&gt;</div>
+                        <div class="text-blue-400">&lt;/div&gt;</div>
+                        <div class="text-gray-400 mt-4">// Le texte sera copié automatiquement</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-12 rounded-lg">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4">🎉 Prêt à utiliser cubFirst ?</h3>
+                <p class="text-gray-300 mb-6">Commencez dès maintenant avec notre framework HTML-first !</p>
+                <div class="flex justify-center space-x-4">
+                    <button class="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
+                        Voir la Documentation
+                    </button>
+                    <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-colors">
+                        Télécharger
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script pour le smooth scroll -->
+    <script>
+        // Smooth scroll pour la navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Animation des sections au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observer toutes les sections de démo
+        document.querySelectorAll('.demo-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

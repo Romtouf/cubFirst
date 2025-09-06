@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Rapide cubFirst</title>
+    
+    <!-- cubFirst Framework -->
+    <script src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v1.0.0/dist/cubfirst.min.js" defer></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .demo-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            background: white;
+        }
+        .code-example {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="demo-container">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">🚀 Test Rapide cubFirst</h1>
+            <p class="text-gray-600">Testez les plugins cubFirst en quelques clics !</p>
+        </header>
+
+        <!-- Modal Demo -->
+        <section class="demo-section">
+            <h2 class="text-2xl font-semibold mb-4">Modal - Fenêtre Popup</h2>
+            <p class="text-gray-600 mb-4">Créez des fenêtres modales élégantes avec un simple attribut HTML.</p>
+            
+            <button id="modal-test" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                Ouvrir Modal
+            </button>
+            
+            <div data-plugin="modal" data-options='{"trigger": "#modal-test"}' class="hidden">
+                <div class="bg-white p-8 rounded-xl shadow-2xl max-w-md mx-auto">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">🎉 Modal Fonctionnelle !</h3>
+                    <p class="text-gray-600 mb-6">Cette modal a été créée avec cubFirst. Aucun JavaScript personnalisé requis !</p>
+                    <button class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors" onclick="this.closest('[data-plugin=modal]').style.display='none'">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+            
+            <div class="code-example">
+&lt;button id="modal-test"&gt;Ouvrir Modal&lt;/button&gt;
+&lt;div data-plugin="modal" data-options='{"trigger": "#modal-test"}'&gt;
+    &lt;div class="modal-content"&gt;Contenu de la modal&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Tabs Demo -->
+        <section class="demo-section">
+            <h2 class="text-2xl font-semibold mb-4">Tabs - Système d'Onglets</h2>
+            <p class="text-gray-600 mb-4">Organisez votre contenu en onglets avec navigation fluide.</p>
+            
+            <div data-plugin="tabs" class="w-full">
+                <div class="flex border-b">
+                    <button class="tab-title px-6 py-3 border-b-2 border-blue-500 text-blue-600 font-semibold" data-tab="tab1">
+                        📊 Statistiques
+                    </button>
+                    <button class="tab-title px-6 py-3 text-gray-600 hover:text-blue-600 transition-colors" data-tab="tab2">
+                        📈 Graphiques
+                    </button>
+                    <button class="tab-title px-6 py-3 text-gray-600 hover:text-blue-600 transition-colors" data-tab="tab3">
+                        ⚙️ Paramètres
+                    </button>
+                </div>
+                
+                <div class="p-6">
+                    <div class="tab-content" data-tab-content="tab1">
+                        <h3 class="text-xl font-semibold mb-4">Vue d'ensemble</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-100 p-4 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-blue-600">1,234</div>
+                                <div class="text-sm text-gray-600">Utilisateurs</div>
+                            </div>
+                            <div class="bg-green-100 p-4 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-green-600">5,678</div>
+                                <div class="text-sm text-gray-600">Vues</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content hidden" data-tab-content="tab2">
+                        <h3 class="text-xl font-semibold mb-4">Graphiques</h3>
+                        <div class="bg-gray-100 h-48 rounded-lg flex items-center justify-center">
+                            <div class="text-gray-500">📊 Graphique interactif ici</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content hidden" data-tab-content="tab3">
+                        <h3 class="text-xl font-semibold mb-4">Paramètres</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span>Notifications</span>
+                                <div class="w-12 h-6 bg-blue-500 rounded-full p-1">
+                                    <div class="w-4 h-4 bg-white rounded-full ml-auto"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span>Mode sombre</span>
+                                <div class="w-12 h-6 bg-gray-300 rounded-full p-1">
+                                    <div class="w-4 h-4 bg-white rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+&lt;div data-plugin="tabs"&gt;
+    &lt;div class="flex border-b"&gt;
+        &lt;button class="tab-title active" data-tab="tab1"&gt;Onglet 1&lt;/button&gt;
+        &lt;button class="tab-title" data-tab="tab2"&gt;Onglet 2&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="tab-content" data-tab-content="tab1"&gt;Contenu 1&lt;/div&gt;
+    &lt;div class="tab-content hidden" data-tab-content="tab2"&gt;Contenu 2&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Carousel Demo -->
+        <section class="demo-section">
+            <h2 class="text-2xl font-semibold mb-4">Carousel - Carrousel d'Images</h2>
+            <p class="text-gray-600 mb-4">Créez des carrousels élégants avec navigation automatique.</p>
+            
+            <div data-plugin="carousel" data-options='{"interval": 3000, "autoplay": true, "indicators": true}'>
+                <div class="carousel-container relative overflow-hidden rounded-lg h-64">
+                    <div class="carousel-slides flex h-full">
+                        <div class="carousel-slide w-full flex-shrink-0 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white">
+                            <div class="text-center">
+                                <h3 class="text-3xl font-bold mb-4">Slide 1</h3>
+                                <p class="text-xl">Premier slide du carousel</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide w-full flex-shrink-0 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white">
+                            <div class="text-center">
+                                <h3 class="text-3xl font-bold mb-4">Slide 2</h3>
+                                <p class="text-xl">Deuxième slide du carousel</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide w-full flex-shrink-0 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white">
+                            <div class="text-center">
+                                <h3 class="text-3xl font-bold mb-4">Slide 3</h3>
+                                <p class="text-xl">Troisième slide du carousel</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="carousel-prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-3 text-gray-700 hover:text-gray-900 transition-all">
+                        ‹
+                    </button>
+                    <button class="carousel-next absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-3 text-gray-700 hover:text-gray-900 transition-all">
+                        ›
+                    </button>
+                    
+                    <div class="carousel-indicators absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                        <button class="w-3 h-3 rounded-full bg-white bg-opacity-75 hover:bg-opacity-100 transition-all" data-slide="0"></button>
+                        <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition-all" data-slide="1"></button>
+                        <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition-all" data-slide="2"></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+&lt;div data-plugin="carousel" data-options='{"interval": 3000, "autoplay": true}'&gt;
+    &lt;div class="carousel-slides flex"&gt;
+        &lt;div class="carousel-slide"&gt;Slide 1&lt;/div&gt;
+        &lt;div class="carousel-slide"&gt;Slide 2&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class="carousel-prev"&gt;‹&lt;/button&gt;
+    &lt;button class="carousel-next"&gt;›&lt;/button&gt;
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Rating Demo -->
+        <section class="demo-section">
+            <h2 class="text-2xl font-semibold mb-4">Rating - Système d'Étoiles</h2>
+            <p class="text-gray-600 mb-4">Créez des systèmes d'évaluation avec des étoiles interactives.</p>
+            
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">Évaluation interactive</h3>
+                    <div data-plugin="rating" data-options='{"value": 0, "max": 5, "labels": ["Terrible", "Mauvais", "Moyen", "Bien", "Excellent"]}'></div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">Note en lecture seule</h3>
+                    <div data-plugin="rating" data-options='{"value": 4.5, "max": 5, "readonly": true}'></div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+&lt;div data-plugin="rating" data-options='{"value": 0, "max": 5}'&gt;&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Toast Demo -->
+        <section class="demo-section">
+            <h2 class="text-2xl font-semibold mb-4">Toast - Notifications</h2>
+            <p class="text-gray-600 mb-4">Affichez des notifications élégantes qui disparaissent automatiquement.</p>
+            
+            <div class="space-x-4">
+                <button id="toast-success" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors">
+                    Toast Succès
+                </button>
+                <button id="toast-error" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors">
+                    Toast Erreur
+                </button>
+                <button id="toast-info" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                    Toast Info
+                </button>
+            </div>
+            
+            <!-- Toasts -->
+            <div data-plugin="toast" data-options='{"trigger": "#toast-success", "message": "Opération réussie !", "type": "success"}'></div>
+            <div data-plugin="toast" data-options='{"trigger": "#toast-error", "message": "Une erreur est survenue", "type": "error"}'></div>
+            <div data-plugin="toast" data-options='{"trigger": "#toast-info", "message": "Information importante", "type": "info"}'></div>
+            
+            <div class="code-example">
+&lt;button id="show-toast"&gt;Afficher Toast&lt;/button&gt;
+&lt;div data-plugin="toast" data-options='{"trigger": "#show-toast", "message": "Hello !", "type": "success"}'&gt;&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg">
+            <h2 class="text-2xl font-bold mb-4">🎉 Impressionné par cubFirst ?</h2>
+            <p class="text-xl mb-6">Découvrez la documentation complète et créez vos propres projets !</p>
+            <div class="flex justify-center space-x-4">
+                <a href="README.md" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    📚 Documentation
+                </a>
+                <a href="demos.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                    🎮 Plus de Démonstrations
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Animation des sections au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observer toutes les sections de démo
+        document.querySelectorAll('.demo-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
