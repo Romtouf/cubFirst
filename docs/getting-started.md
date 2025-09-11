@@ -31,7 +31,7 @@ Créez un fichier `index.html` et ajoutez cubFirst :
     
     <!-- 🎯 CubFirst - Un seul script ! -->
     <script
-        src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v1.0.0/dist/cubfirst.min.js"
+        src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v2.0.0/dist/cubfirst.min.js"
         defer
     ></script>
     
@@ -78,7 +78,7 @@ Si vous voyez `"object"`, cubFirst est correctement installé ! 🎉
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premier Plugin cubFirst</title>
-    <script src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v1.0.0/dist/cubfirst.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v2.0.0/dist/cubfirst.min.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-8">
@@ -377,7 +377,7 @@ Créons un mini-site complet avec cubFirst :
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Site cubFirst</title>
-    <script src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v1.0.0/dist/cubfirst.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/Romtouf/cubfirst@v2.0.0/dist/cubfirst.min.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .hero-bg {

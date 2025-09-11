@@ -1,7 +1,7 @@
 {
   "name": "cubfirst",
-  "version": "1.0.0",
-  "description": "Framework HTML-first modulaire et activable par data-plugin, sans JS requis pour l'utilisateur.",
+  "version": "2.0.0",
+  "description": "Framework HTML-first révolutionnaire - Composants modulaires en dev, fichiers autonomes en production. Zero compromis !",
   "main": "dist/cubfirst.min.js",
   "repository": {
     "type": "git",
@@ -10,11 +10,13 @@
   "keywords": [
     "html-first",
     "framework",
-    "javascript",
+    "modular-components",
+    "cub-include",
+    "build-tool",
+    "static-build",
     "data-plugin",
-    "modular",
-    "tailwind",
-    "frontend",
+    "zero-server",
+    "autonomous-files",
     "micro-framework"
   ],
   "author": "Romtouf",

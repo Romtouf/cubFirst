@@ -7060,6 +7060,176 @@ function addResponsiveListener(element: HTMLElement, event: string, handler: (e:
   }
 }
 
+// === CACHE POUR CUB-INCLUDE ===
+class IncludeCache {
+  private cache = new Map<string, string>();
+  private loading = new Set<string>();
+  
+  private resolveUrl(url: string): string {
+    // Si l'URL est déjà absolue (http/https) ou commence par /, la retourner telle quelle
+    if (url.match(/^(https?:\/\/|\/)/)) {
+      return url;
+    }
+    
+    // Pour les URLs relatives, essayer différents chemins possibles
+    const currentPath = window.location.pathname;
+    const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+    
+    // Retourner l'URL relative par rapport au chemin actuel
+    return basePath + url;
+  }
+
+  async getContent(url: string, once: boolean = false): Promise<string> {
+    const resolvedUrl = this.resolveUrl(url);
+    
+    // Si le contenu est déjà en cache et que once=true, le retourner
+    if (once && this.cache.has(resolvedUrl)) {
+      return this.cache.get(resolvedUrl)!;
+    }
+
+    // Si le fichier est déjà en cours de chargement, attendre
+    if (this.loading.has(resolvedUrl)) {
+      return new Promise((resolve) => {
+        const checkLoading = () => {
+          if (!this.loading.has(resolvedUrl)) {
+            resolve(this.cache.get(resolvedUrl) || '');
+          } else {
+            setTimeout(checkLoading, 10);
+          }
+        };
+        checkLoading();
+      });
+    }
+
+    // Marquer comme en cours de chargement
+    this.loading.add(resolvedUrl);
+
+    try {
+      const response = await fetch(resolvedUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      const content = await response.text();
+      
+      // Mettre en cache si once=true
+      if (once) {
+        this.cache.set(resolvedUrl, content);
+      }
+      
+      return content;
+    } catch (error) {
+      console.error(`cubFirst: Erreur lors du chargement de ${url}:`, error);
+      return `<div style="color: #ef4444; padding: 0.5rem; border: 1px solid #fecaca; background: #fef2f2; border-radius: 0.25rem; font-size: 0.875rem;">
+        ❌ Erreur: Impossible de charger ${url}
+        <br><small>${error instanceof Error ? error.message : 'Erreur inconnue'}</small>
+      </div>`;
+    } finally {
+      this.loading.delete(resolvedUrl);
+    }
+  }
+
+  clear() {
+    this.cache.clear();
+    this.loading.clear();
+  }
+}
+
+const includeCache = new IncludeCache();
+
+// === PLUGIN CUB-INCLUDE ===
+function initCubInclude(el: HTMLElement) {
+  const src = el.getAttribute('src');
+  const inlineContent = el.getAttribute('data-inline');
+  const once = el.hasAttribute('once');
+  
+  // Priorité : data-inline puis src
+  if (inlineContent) {
+    // Mode inline : utiliser le contenu directement
+    el.innerHTML = inlineContent;
+    
+    // Réinitialiser les plugins dans le contenu chargé
+    const newElements = el.querySelectorAll<HTMLElement>('[data-plugin]');
+    newElements.forEach(newEl => {
+      const name = newEl.dataset.plugin;
+      if (!name) return;
+      
+      const opts = parseOptions(newEl.dataset.options || '{}');
+      initPlugin(newEl, name, opts);
+    });
+    
+    // API pour le mode inline
+    (el as any).cubIncludeAPI = {
+      reload: () => {
+        el.innerHTML = inlineContent;
+        // Réinitialiser les plugins
+        const newElements = el.querySelectorAll<HTMLElement>('[data-plugin]');
+        newElements.forEach(newEl => {
+          const name = newEl.dataset.plugin;
+          if (!name) return;
+          const opts = parseOptions(newEl.dataset.options || '{}');
+          initPlugin(newEl, name, opts);
+        });
+      },
+      getSrc: () => 'inline',
+      isOnce: () => false
+    };
+    return;
+  }
+  
+  if (!src) {
+    console.error('cubFirst: cub-include nécessite un attribut "src" ou "data-inline"');
+    el.innerHTML = '<div style="color: #ef4444; padding: 0.5rem;">❌ Attribut "src" ou "data-inline" manquant</div>';
+    return;
+  }
+  
+  // Vérifier si on est en mode file:// et avertir l'utilisateur
+  if (location.protocol === 'file:') {
+    console.warn('cubFirst: Mode file:// détecté. Pour les fichiers externes, utilisez un serveur local ou l\'attribut data-inline.');
+    el.innerHTML = '<div style="color: #f59e0b; padding: 0.5rem; border: 1px solid #fbbf24; background: #fffbeb; border-radius: 0.25rem; font-size: 0.875rem;">⚠️ Mode fichier local détecté<br><small>Utilisez un serveur local ou data-inline="..." pour les composants externes</small></div>';
+    return;
+  }
+
+  // Afficher un indicateur de chargement
+  el.innerHTML = '<div style="color: #6b7280; padding: 0.5rem; font-style: italic;">⏳ Chargement...</div>';
+
+  // Charger le contenu
+  includeCache.getContent(src, once).then(content => {
+    el.innerHTML = content;
+    
+    // Réinitialiser les plugins dans le contenu chargé
+    const newElements = el.querySelectorAll<HTMLElement>('[data-plugin]');
+    newElements.forEach(newEl => {
+      const name = newEl.dataset.plugin;
+      if (!name) return;
+      
+      const opts = parseOptions(newEl.dataset.options || '{}');
+      initPlugin(newEl, name, opts);
+    });
+  });
+
+  // API pour le plugin
+  (el as any).cubIncludeAPI = {
+    reload: () => {
+      el.innerHTML = '<div style="color: #6b7280; padding: 0.5rem; font-style: italic;">⏳ Chargement...</div>';
+      includeCache.getContent(src, once).then(content => {
+        el.innerHTML = content;
+        
+        // Réinitialiser les plugins dans le contenu chargé
+        const newElements = el.querySelectorAll<HTMLElement>('[data-plugin]');
+        newElements.forEach(newEl => {
+          const name = newEl.dataset.plugin;
+          if (!name) return;
+          
+          const opts = parseOptions(newEl.dataset.options || '{}');
+          initPlugin(newEl, name, opts);
+        });
+      });
+    },
+    getSrc: () => src,
+    isOnce: () => once
+  };
+}
+
 // === GESTIONNAIRE DE NETTOYAGE ===
 class CleanupManager {
   private cleanupFunctions = new Map<HTMLElement, (() => void)[]>();
@@ -7186,6 +7356,7 @@ const cubFirst = {
     if (pluginType === 'theme-system') return (el as any).themeSystemAPI || null;
     if (pluginType === 'drawer') return (el as any).drawerAPI || null;
     if (pluginType === 'rich-editor') return (el as any).richEditorAPI || null;
+    if (pluginType === 'cub-include') return (el as any).cubIncludeAPI || null;
     
     // Ou retourner toutes les APIs disponibles
     return {
@@ -7226,7 +7397,8 @@ const cubFirst = {
       progressScroll: (el as any).progressScrollAPI || null,
       themeSystem: (el as any).themeSystemAPI || null,
       drawer: (el as any).drawerAPI || null,
-      richEditor: (el as any).richEditorAPI || null
+      richEditor: (el as any).richEditorAPI || null,
+      cubInclude: (el as any).cubIncludeAPI || null
     };
   }
 };
@@ -7376,6 +7548,9 @@ function initPlugin(el: HTMLElement, name: string, opts: any) {
     case "rich-editor":
       initRichEditor(el, opts);
       break;
+    case "cub-include":
+      initCubInclude(el);
+      break;
       default:
         console.warn(`cubFirst: Plugin "${name}" non reconnu`);
     }
@@ -7383,6 +7558,21 @@ function initPlugin(el: HTMLElement, name: string, opts: any) {
     console.error(`cubFirst: Erreur sur le plugin "${name}"`, err);
   }
 }
+
+// === SUPPORT HTMX ===
+function reinitializeIncludes() {
+  // Réinitialiser tous les cub-include après un swap htmx
+  document.querySelectorAll<HTMLElement>('cub-include[data-plugin="cub-include"]').forEach((el) => {
+    const api = (el as any).cubIncludeAPI;
+    if (api && api.reload) {
+      api.reload();
+    }
+  });
+}
+
+// Écouter les événements htmx
+document.addEventListener('htmx:afterSwap', reinitializeIncludes);
+document.addEventListener('htmx:afterSettle', reinitializeIncludes);
 
 // === BOOTSTRAP ===
 document.addEventListener("DOMContentLoaded", () => {

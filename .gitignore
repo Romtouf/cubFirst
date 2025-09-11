@@ -9,6 +9,9 @@ node_modules/
 .vscode/
 .idea/
 
+# Claude Code
+.claude/
+
 # Système
 .DS_Store
 Thumbs.db
